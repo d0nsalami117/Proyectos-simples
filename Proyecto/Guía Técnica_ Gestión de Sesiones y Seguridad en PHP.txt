@@ -1,0 +1,64 @@
+Guía Técnica: Gestión de Sesiones y 
+Seguridad en PHP 
+En el desarrollo de aplicaciones web, uno de los mayores desafíos es que el protocolo HTTP es 
+"sin estado" (stateless). Esto significa que el servidor no recuerda a los usuarios entre una 
+página y otra. Para solucionar esto y mantener al usuario conectado, utilizamos Sesiones. 
+Esta guía te explicará cómo funcionan las sesiones en PHP, cómo se construyen las variables 
+de sesión y cómo utilizarlas para crear sistemas de acceso (login) seguros. 
+1. El Iniciador: session_start() 
+Para que PHP comience a rastrear a un usuario o para recuperar una sesión existente, es 
+estrictamente necesario invocar la función session_start(). Esta función le dice al servidor: 
+"Prepárate para usar variables de sesión en esta página". 
+Regla de oro: session_start() debe ser la primera línea de código en tu archivo PHP, antes de 
+que se envíe cualquier etiqueta HTML, texto o espacio en blanco al navegador. Si no la 
+incluyes, el servidor ignorará cualquier intento de usar sesiones. 
+<?php 
+session_start(); 
+// A partir de aquí ya podemos usar sesiones 
+?> 
+2. Las Variables Superglobales: $_SESSION 
+Una vez que la sesión ha iniciado, PHP nos da acceso a una variable muy especial llamada 
+$_SESSION. Esta variable es lo que se conoce como una "superglobal" y funciona como un 
+arreglo asociativo (un arreglo donde los índices son palabras en lugar de números). 
+En lugar de guardar la información en la computadora del usuario, la información de 
+$_SESSION se guarda en el servidor, lo que la hace mucho más segura. Solo enviamos al 
+navegador un identificador único (una cookie llamada PHPSESSID) para que el servidor sepa 
+quién es quién. 
+Por ejemplo, cuando un usuario introduce sus datos correctamente, podemos guardar su 
+nombre y un indicador de que ha iniciado sesión: 
+// Asignación de datos a la sesión 
+$_SESSION['sesion'] = TRUE; 
+$_SESSION['usuario'] = $usuario; 
+Estos datos "viajarán" y estarán disponibles en cualquier otra página de tu sitio web, siempre y 
+cuando esa página también tenga session_start() al principio. 
+Mtro. Jonathan Tapia  
+3. El "Candado" de Seguridad: Protegiendo Vistas 
+Si tenemos una página como el perfil del usuario (perfil.php), no queremos que alguien acceda 
+a ella simplemente escribiendo la URL en su navegador sin haber iniciado sesión. Aquí es 
+donde entra en juego nuestro "candado". 
+Para crear este candado, utilizamos la función isset(), la cual verifica si una variable ha sido 
+declarada y no es nula. Evaluamos la variable que creamos al momento de hacer el login: 
+$_SESSION['sesion']. 
+// Candado de seguridad en perfil.php 
+if(!isset($_SESSION['sesion'])){ 
+header("Location: index.html");  
+exit(); 
+} 
+¿Cómo funciona esta lógica? El símbolo ! significa negación ("NO"). Por lo tanto, la 
+instrucción dice: "Si la variable de sesión 'sesion' NO está configurada, entonces redirige al 
+usuario a la página de inicio (index.html) y detén la ejecución del código con exit()". 
+4. Cierre y Destrucción de Sesiones 
+Cuando el usuario decide salir del sistema, no basta con redirigirlo a la página principal; 
+debemos limpiar la información almacenada en el servidor para que nadie más pueda usarla. 
+Para cerrar una sesión correctamente (como en tu archivo logout.php), utilizamos dos 
+funciones en conjunto después de iniciar la sesión: 
+● session_unset(): Se encarga de liberar todas las variables de sesión actuales. 
+Básicamente vacía el arreglo $_SESSION. 
+● session_destroy(): Va un paso más allá y destruye completamente la sesión almacenada 
+en el servidor, eliminando los archivos temporales asociados a ese usuario. 
+<?php 
+session_start(); 
+session_unset();   // Limpia las variables 
+session_destroy(); // Destruye la sesión 
+// Redirección al inicio 
+?>

@@ -1,0 +1,236 @@
+    :root {
+      --bg: #f4f7fc;
+      --surface: #ffffff;
+      --primary: #2e1f82;
+      --primary-dark: #2e1f82;
+      --danger: #d3c612;
+      --success: #198754;
+      --text: #2c3e50;
+      --muted: #6c757d;
+      --border: #dde2eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: #c8c2ff;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      background-image: url("LogoGym.png");
+      background-size: 90px;
+      background-position: left center;
+      background-repeat: no-repeat;
+      padding-left: 100px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .header-actions p {
+      margin: 0;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header .status {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #e2e9ff;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 24px auto;
+      padding: 0 20px 40px;
+    }
+
+    .nav-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .nav-buttons a {
+      padding: 14px 18px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-buttons a.active,
+    .nav-buttons a:hover {
+      border-color: var(--primary);
+      background: #eef4ff;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 35px rgba(56, 76, 120, 0.06);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input, select, button, textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    button.secondary {
+      background: #f8f9fa;
+      border: 1px solid var(--border);
+    }
+
+    button.danger {
+      background: var(--danger);
+      color: white;
+      border: none;
+    }
+
+    button.success {
+      background: var(--success);
+      color: white;
+      border: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 700;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .note {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .routines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .routine-card {
+      background: #f8fbff;
+      border: 1px solid #d8e5ff;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .routine-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background: #e7f3ff;
+      color: var(--primary);
+    }
+
+    @media (max-width: 860px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
